@@ -66,11 +66,15 @@ The following attributes are set based on the platform, see the
   and this attribute addresses that scenario. Valid only for EL-family
   distros (RedHat/Centos/etc.).
 
+* `node['postgresql']['set_postgres_password']` - Whether to set the
+  `postgres` user's password or not.  Defaults to true.
+
 The following attributes are generated in
 `recipe[postgresql::server]`.
 
 * `node['postgresql']['password']['postgres']` - randomly generated
-  password by the `openssl` cookbook's library.
+  password by the `openssl` cookbook's library if
+  `node['postgresql']['set_postgres_password']` is enabled.
   (TODO: This is broken, as it disables the password.)
 
 Configuration

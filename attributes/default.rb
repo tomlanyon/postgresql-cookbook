@@ -51,6 +51,8 @@ when "ubuntu"
     default['postgresql']['version'] = "8.3"
   when node['platform_version'].to_f <= 11.04
     default['postgresql']['version'] = "8.4"
+  when node['platform_version'].to_f >= 14.04
+    default['postgresql']['version'] = "9.3"
   else
     default['postgresql']['version'] = "9.1"
   end

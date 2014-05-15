@@ -1,0 +1,7 @@
+.include /lib/systemd/system/postgresql.service
+
+[Service]
+Environment=PGDATA=<%= node['postgresql']['dir'] %>
+<% if node['postgresql']['config'].attribute?("port") -%>
+Environment=PGPORT=<%= node['postgresql']['config']['port'] %>
+<% end -%>

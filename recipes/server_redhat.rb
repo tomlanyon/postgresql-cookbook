@@ -51,10 +51,22 @@ node['postgresql']['server']['packages'].each do |pg_pack|
 
 end
 
-template "/etc/sysconfig/pgsql/#{node['postgresql']['server']['service_name']}" do
-  source "pgsql.sysconfig.erb"
-  mode "0644"
-  notifies :restart, "service[postgresql]", :delayed
+if node["init_package"] == "systemd"
+
+    template "/etc/systemd/system/#{node['postgresql']['server']['service_name']}.service" do
+      source "pgsql.systemd-service.erb"
+      mode "0644"
+      notifies :restart, "service[postgresql]", :delayed
+    end
+
+else
+
+    template "/etc/sysconfig/pgsql/#{node['postgresql']['server']['service_name']}" do
+      source "pgsql.sysconfig.erb"
+      mode "0644"
+      notifies :restart, "service[postgresql]", :delayed
+    end
+
 end
 
 unless platform_family?("suse")
